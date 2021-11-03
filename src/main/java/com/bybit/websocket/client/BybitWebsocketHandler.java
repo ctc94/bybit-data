@@ -3,7 +3,7 @@ package com.bybit.websocket.client;
 import javax.websocket.*;
 
 @ClientEndpoint
-public class BybitWebsocket {
+public class BybitWebsocketHandler {
 
     @OnOpen
     public void onOpen(Session session) {

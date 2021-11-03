@@ -74,7 +74,7 @@ public class Client {
 //            String uri = "wss://stream.bytick.com/realtime";
 //            String uri = "wss://stream-testnet.bybit-cn.com/realtime";
 //            String uri = "wss://stream-testnet.bybit.com/realtime";
-            container.connectToServer(BybitWebsocket.class, URI.create(uri));
+            container.connectToServer(BybitWebsocketHandler.class, URI.create(uri));
             session.getBasicRemote().sendText("{\"op\":\"ping\"}");
             session.getBasicRemote().sendText(getAuthMessage());
             session.getBasicRemote().sendText(subscribe("subscribe", "instrument_info.100ms.BTCUSD"));

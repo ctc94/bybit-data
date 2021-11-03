@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.stereotype.Component;
 
-import com.bybit.websocket.client.BybitWebsocket;
+import com.bybit.websocket.client.BybitWebsocketHandler;
 import com.bybit.websocket.client.Client;
 import com.bybit.zzz.MyStompSessionHandler;
 
@@ -79,7 +79,7 @@ public class BybitDataApplication {
 					}
 
 					if (line.equals("start")) {
-						container.connectToServer(BybitWebsocket.class, URI.create(uri));
+						container.connectToServer(BybitWebsocketHandler.class, URI.create(uri));
 						// Client.session.getBasicRemote().sendText("{\"op\":\"ping\"}");
 						// Client.session.getBasicRemote().sendText(Client.getAuthMessage());
 //	                    Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "instrument_info.100ms.BTCUSD"));
