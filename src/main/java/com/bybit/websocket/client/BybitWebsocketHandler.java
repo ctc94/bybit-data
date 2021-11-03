@@ -31,7 +31,7 @@ public class BybitWebsocketHandler {
 
     @OnMessage
     public void processMessage(String message) {
-    	
+    	 System.out.println(message);
     	this.template.convertAndSend("bybit-data",message);
 		/*
 		JSONArray jArray = jObject.getJSONArray("data");
