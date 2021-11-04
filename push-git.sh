@@ -6,7 +6,7 @@ echo "project:${project}"
 export token=$(cat .git-token)
 echo ${token}
 
-git remote set-url origin https://ctc948040:${token}@github.com/ctc94/bybit-data.git
+git remote set-url origin https://ctc948040:${token}@github.com/ctc94/${project}.git
 
 git add .
 
