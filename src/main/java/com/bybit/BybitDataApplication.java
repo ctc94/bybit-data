@@ -1,9 +1,11 @@
 package com.bybit;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
 
 import javax.websocket.ContainerProvider;
+import javax.websocket.DeploymentException;
 import javax.websocket.WebSocketContainer;
 
 import org.slf4j.Logger;
@@ -69,7 +71,7 @@ public class BybitDataApplication {
 //	            String uri = "wss://stream-testnet.bybit.com/realtime";
 				// session.getBasicRemote().sendText(subscribe("subscribe", "order"));
 				java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
-
+				runData(container,uri);
 				while (true) {
 					String line = r.readLine();
 					log.info("===> " + line);
@@ -86,16 +88,7 @@ public class BybitDataApplication {
 					}
 
 					if (line.equals("start")) {
-						container.connectToServer(new BybitWebsocketHandler(template), URI.create(uri));
-						// Client.session.getBasicRemote().sendText("{\"op\":\"ping\"}");
-						// Client.session.getBasicRemote().sendText(Client.getAuthMessage());
-						// Client.session.getBasicRemote().sendText(Client.subscribe("subscribe",
-						// "trade.BTCUSD"));
-						Client.session.getBasicRemote()
-								.sendText(Client.subscribe("subscribe", "instrument_info.100ms.BTCUSD"));
-						Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "klineV2.1.BTCUSD"));
-						Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "klineV2.5.BTCUSD"));
-						
+						runData(container,uri);
 					}
 				}
 
@@ -106,6 +99,18 @@ public class BybitDataApplication {
 			}
 
 		};
+	}
+	
+	private void runData(WebSocketContainer container,String uri) throws DeploymentException, IOException {
+		container.connectToServer(new BybitWebsocketHandler(template), URI.create(uri));
+		// Client.session.getBasicRemote().sendText("{\"op\":\"ping\"}");
+		// Client.session.getBasicRemote().sendText(Client.getAuthMessage());
+		// Client.session.getBasicRemote().sendText(Client.subscribe("subscribe",
+		// "trade.BTCUSD"));
+		Client.session.getBasicRemote()
+				.sendText(Client.subscribe("subscribe", "instrument_info.100ms.XRPUSD|BTCUSD")); 
+		//Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "klineV2.1.BTCUSD"));
+		Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "klineV2.5.BTCUSD"));
 	}
 
 }
