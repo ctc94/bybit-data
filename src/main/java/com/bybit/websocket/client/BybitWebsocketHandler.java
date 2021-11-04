@@ -31,18 +31,8 @@ public class BybitWebsocketHandler {
 
     @OnMessage
     public void processMessage(String message) {
-    	
     	if(!(message.indexOf("last_price")!=-1 ||  message.indexOf("klineV2")!=-1)) return;    	
     	this.template.convertAndSend("bybit-data",message);
-		/*
-		JSONArray jArray = jObject.getJSONArray("data");
-		for (int i = 0; i < jArray.length(); i++) {
-	        JSONObject obj = jArray.getJSONObject(i);
-	        LOGGER.info(obj.getString("start"));
-		}*/
-    	
-    	
-		//
     }
 
     @OnError
