@@ -27,7 +27,7 @@ import com.bybit.zzz.MyStompSessionHandler;
 public class BybitDataApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(BybitDataApplication.class);
-	
+
 	@Autowired
 	RedisTemplate<String, Object> template;
 
@@ -75,7 +75,9 @@ public class BybitDataApplication {
 					log.info("===> " + line);
 
 					if (line.equals("quit")) {
-						if(Client.session != null) Client.session.close();
+						if (Client.session != null) {
+							Client.session.close();
+						}
 						break;
 					}
 
@@ -87,11 +89,13 @@ public class BybitDataApplication {
 						container.connectToServer(new BybitWebsocketHandler(template), URI.create(uri));
 						// Client.session.getBasicRemote().sendText("{\"op\":\"ping\"}");
 						// Client.session.getBasicRemote().sendText(Client.getAuthMessage());
-//	                    Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "instrument_info.100ms.BTCUSD"));
-						//Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "klineV2.1.BTCUSD"));
-						Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "klineV2.5.BTCUSD"));
 						// Client.session.getBasicRemote().sendText(Client.subscribe("subscribe",
 						// "trade.BTCUSD"));
+						Client.session.getBasicRemote()
+								.sendText(Client.subscribe("subscribe", "instrument_info.100ms.BTCUSD"));
+						Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "klineV2.1.BTCUSD"));
+						Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "klineV2.5.BTCUSD"));
+						
 					}
 				}
 
