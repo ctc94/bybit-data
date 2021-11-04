@@ -1,4 +1,4 @@
-push-git.sh
+#push-git.sh
 backup/
 bin/
 .settings/
