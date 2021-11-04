@@ -75,7 +75,7 @@ public class BybitDataApplication {
 					log.info("===> " + line);
 
 					if (line.equals("quit")) {
-						Client.session.close();
+						if(Client.session.isOpen()) Client.session.close();
 						break;
 					}
 
