@@ -32,7 +32,7 @@ public class BybitWebsocketHandler {
     @OnMessage
     public void processMessage(String message) {
     	//if(!(message.indexOf("last_price")!=-1 ||  message.indexOf("klineV2")!=-1)) return;   
-    	System.out.println(message);
+    	//System.out.println(message);
     	if(message.indexOf("instrument_info.100ms.BTCUSDT")!=-1){
     		this.template.convertAndSend("instrument_info.100ms.BTCUSDT",message);
     	}
