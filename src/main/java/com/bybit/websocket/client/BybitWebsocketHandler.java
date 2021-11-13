@@ -31,8 +31,31 @@ public class BybitWebsocketHandler {
 
     @OnMessage
     public void processMessage(String message) {
-    	if(!(message.indexOf("last_price")!=-1 ||  message.indexOf("klineV2")!=-1)) return;    	
-    	this.template.convertAndSend("bybit-data",message);
+    	//if(!(message.indexOf("last_price")!=-1 ||  message.indexOf("klineV2")!=-1)) return;   
+    	System.out.println(message);
+    	if(message.indexOf("instrument_info.100ms.BTCUSDT")!=-1){
+    		this.template.convertAndSend("instrument_info.100ms.BTCUSDT",message);
+    	}
+    	
+    	if(message.indexOf("candle.5.BTCUSDT")!=-1){
+    		this.template.convertAndSend("candle.5.BTCUSDT",message);
+    	}
+    	
+    	if(message.indexOf("candle.30.BTCUSDT")!=-1){
+    		this.template.convertAndSend("candle.30.BTCUSDT",message);
+    	}
+    	
+    	if(message.indexOf("candle.60.BTCUSDT")!=-1){
+    		this.template.convertAndSend("candle.60.BTCUSDT",message);
+    	}
+    	
+    	if(message.indexOf("candle.240.BTCUSDT")!=-1){
+    		this.template.convertAndSend("candle.240.BTCUSDT",message);
+    	}
+    	
+    	if(message.indexOf("candle.D.BTCUSDT")!=-1){
+    		this.template.convertAndSend("candle.D.BTCUSDT",message);
+    	}
     }
 
     @OnError

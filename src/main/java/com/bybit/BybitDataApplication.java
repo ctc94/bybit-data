@@ -65,7 +65,7 @@ public class BybitDataApplication {
 //			}
 			try {
 				WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-				String uri = "wss://stream.bybit.com/realtime";
+				String uri = "wss://stream.bybit.com/realtime_public";
 //	            String uri = "wss://stream.bytick.com/realtime";
 //	            String uri = "wss://stream-testnet.bybit-cn.com/realtime";
 //	            String uri = "wss://stream-testnet.bybit.com/realtime";
@@ -108,9 +108,14 @@ public class BybitDataApplication {
 		// Client.session.getBasicRemote().sendText(Client.subscribe("subscribe",
 		// "trade.BTCUSD"));
 		Client.session.getBasicRemote()
-				.sendText(Client.subscribe("subscribe", "instrument_info.100ms.XRPUSD|BTCUSD")); 
+				.sendText(Client.subscribe("subscribe", "instrument_info.100ms.BTCUSDT")); 
 		//Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "klineV2.1.BTCUSD"));
-		Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "klineV2.5.BTCUSD"));
+		//Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "candle.5.BTCUSDT"));
+		Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "candle.5.BTCUSDT"));
+		Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "candle.30.BTCUSDT"));
+		Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "candle.60.BTCUSDT"));
+		Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "candle.240.BTCUSDT"));
+		Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "candle.D.BTCUSDT"));
 	}
 
 }

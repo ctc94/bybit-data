@@ -18,7 +18,7 @@ public class RedisConfig {
 		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
 		container.setConnectionFactory(connectionFactory);
 		// container.addMessageListener(listenerAdapter, new PatternTopic("chart"));
-		//container.addMessageListener(messageListener(redisMessageSubscriber), new PatternTopic("bybit-data"));
+		//container.addMessageListener(messageListener(redisMessageSubscriber), new PatternTopic("instrument_info.100ms.BTCUSDT"));
 		return container;
 	}
 
