@@ -31,7 +31,7 @@ public class BybitDataApplication {
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(BybitDataApplication.class, args).close();
+		SpringApplication.run(BybitDataApplication.class, args);
 	}
 
 	/*
@@ -52,8 +52,8 @@ public class BybitDataApplication {
 	@Profile("default") // Don't run from test(s)
 	public ApplicationRunner runner() {
 		return args -> {
-			this.exec.execute(() -> log.info("Hit Enter to terminate..."));
-			System.in.read();
+			//this.exec.execute(() -> log.info("Hit Enter to terminate..."));
+			//System.in.read();
 		};
 	}
 
