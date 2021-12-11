@@ -43,6 +43,7 @@ public class ScheduledSession {
 		// Client.session.getBasicRemote().sendText(Client.getAuthMessage());
 		// Client.session.getBasicRemote().sendText(Client.subscribe("subscribe",
 		// "trade.BTCUSD"));
+		Client.session.setMaxIdleTimeout(2000);
 		Client.session.getBasicRemote()
 				.sendText(Client.subscribe("subscribe", "instrument_info.100ms.BTCUSDT")); 
 		//Client.session.getBasicRemote().sendText(Client.subscribe("subscribe", "klineV2.1.BTCUSD"));
