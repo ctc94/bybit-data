@@ -19,3 +19,4 @@ buildNumber.properties
 .vault_pass
 .api
 .git-token
+nohup.out
