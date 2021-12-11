@@ -10,7 +10,7 @@
 		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
 			by default -->
 		<encoder>
-			<pattern>[%date][%-5level][%logger] - [%F:%L] - %msg%n</pattern>
+			<pattern>[%date][%-5level] - [%F:%L] - %msg%n</pattern>
 		</encoder>
 	</appender>
 
