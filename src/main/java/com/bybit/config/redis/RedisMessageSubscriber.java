@@ -1,4 +1,4 @@
-package com.bybit.redis.config;
+package com.bybit.config.redis;
 
 import org.json.JSONArray;
 import org.json.JSONException;

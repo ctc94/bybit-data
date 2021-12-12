@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,8 @@ public class ScheduledSession {
 	private static final Logger log = LoggerFactory.getLogger(ScheduledSession.class);
 	@Autowired
 	RedisTemplate<String, Object> template;
+	@Autowired
+	KafkaTemplate<String, String> templateKafka;
 	
 	@Scheduled(fixedRate = 2000, initialDelayString = "5000")
 	public void checkSession() throws DeploymentException, IOException {
@@ -38,7 +41,7 @@ public class ScheduledSession {
 		WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 		String uri = "wss://stream.bybit.com/realtime_public";
 		
-		container.connectToServer(new BybitWebsocketHandler(template), URI.create(uri));
+		container.connectToServer(new BybitWebsocketHandler(template,templateKafka), URI.create(uri));
 		// Client.session.getBasicRemote().sendText("{\"op\":\"ping\"}");
 		// Client.session.getBasicRemote().sendText(Client.getAuthMessage());
 		// Client.session.getBasicRemote().sendText(Client.subscribe("subscribe",

@@ -1,5 +1,14 @@
 package com.bybit;
 
+import java.util.Arrays;
+import java.util.Properties;
+
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.TopicPartition;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +22,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -26,7 +36,7 @@ public class BybitDataApplication {
 
 	@Autowired
 	RedisTemplate<String, Object> template;
-	
+
 	private final TaskExecutor exec = new SimpleAsyncTaskExecutor();
 
 	public static void main(String[] args) {
@@ -47,17 +57,75 @@ public class BybitDataApplication {
 	public StompSessionHandler getStompSessionHandler() throws Exception {
 		return new MyStompSessionHandler();
 	}
-	
+
 	@Bean
 	@Profile("default") // Don't run from test(s)
-	public ApplicationRunner runner() {
+	public ApplicationRunner runner(KafkaTemplate<String, String> template) {
 		return args -> {
-			//this.exec.execute(() -> log.info("Hit Enter to terminate..."));
-			//System.in.read();
+			//this.exec.execute(() -> log.info("instrument_info.100ms.BTCUSDT"));
+			//template.send("instrument_info.100ms.BTCUSDT","6112", "1112");
+			//Collection<TopicPartitionOffset> requested = null;
+			//ConsumerRecords<String, String> cr = template.receive(requested);
+			//receiveFromKafka();
 		};
 	}
+	
+	public void receiveFromKafka() { 
+        Properties props = new Properties();
+        props.put("bootstrap.servers", "15.164.117.97:9092");
+        props.put("group.id", "instrument_info.100ms.BTCUSDT");
+        //props.put("enable.auto.commit", "true");
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");        
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 
-	//@Bean
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
+        consumer.subscribe(Arrays.asList("instrument_info.100ms.BTCUSDT")); 
+        //consumer.assignment();
+        
+
+        try {
+            while (true) {
+                ConsumerRecords<String, String> records = consumer.poll(5000);
+                boolean flag = true;
+                if (flag) {
+//                    consumer.seekToBeginning(
+//                        Stream.of(new TopicPartition("instrument_info.100ms.BTCUSDT", 0)
+//                        		,new TopicPartition("instrument_info.100ms.BTCUSDT", 1)
+//                        		,new TopicPartition("instrument_info.100ms.BTCUSDT", 2)
+//                        		,new TopicPartition("instrument_info.100ms.BTCUSDT", 3)
+//                        		,new TopicPartition("instrument_info.100ms.BTCUSDT", 4)
+//                        		,new TopicPartition("instrument_info.100ms.BTCUSDT", 5)
+//                        		,new TopicPartition("instrument_info.100ms.BTCUSDT", 6)
+//                        		,new TopicPartition("instrument_info.100ms.BTCUSDT", 7)
+//                        		,new TopicPartition("instrument_info.100ms.BTCUSDT", 8)
+//                        		,new TopicPartition("instrument_info.100ms.BTCUSDT", 9)                        		
+//                        		).collect(toList()));
+                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 0), 5);
+                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 1), 5);
+                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 2), 5);
+                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 3), 5); 
+                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 4), 5);
+                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 5), 5);
+                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 6), 5);
+                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 7), 5);
+                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 8), 5);
+                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 9), 5);
+                    flag = false;
+                }
+                for (ConsumerRecord<String, String> record : records) {
+//                	System.out.println("aaaa"+record.value());
+                    System.out.printf("Topic: %s, Partition: %s, Offset: %d, Key: %s, Value: %s\n",
+                            record.topic(), record.partition(), record.offset(), record.key(), record.value());
+                }
+                break;
+            }
+        } finally {
+            consumer.close();
+        }
+    }
+
+	// @Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 
 		return args -> {
