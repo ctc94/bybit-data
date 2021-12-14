@@ -26,7 +26,7 @@ public class ScheduledSession {
 	@Autowired
 	KafkaTemplate<String, String> templateKafka;
 	
-	//@Scheduled(fixedRate = 2000, initialDelayString = "5000")
+	@Scheduled(fixedRate = 2000, initialDelayString = "5000")
 	public void checkSession() throws DeploymentException, IOException {
 		
 		log.info(">>>>>>>> checkSession");
