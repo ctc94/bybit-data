@@ -75,7 +75,8 @@ public class BybitDataApplication {
         props.put("bootstrap.servers", "15.164.117.97:9092");
         props.put("group.id", "instrument_info.100ms.BTCUSDT");
         //props.put("enable.auto.commit", "true");
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");        
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+        props.put(ConsumerConfig.CLIENT_DNS_LOOKUP_CONFIG, "use_all_dns_ips");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 
@@ -101,16 +102,11 @@ public class BybitDataApplication {
 //                        		,new TopicPartition("instrument_info.100ms.BTCUSDT", 8)
 //                        		,new TopicPartition("instrument_info.100ms.BTCUSDT", 9)                        		
 //                        		).collect(toList()));
-                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 0), 5);
-                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 1), 5);
-                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 2), 5);
-                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 3), 5); 
-                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 4), 5);
-                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 5), 5);
-                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 6), 5);
-                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 7), 5);
-                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 8), 5);
-                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 9), 5);
+                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 0), 0);
+                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 1), 0);
+                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 2), 0);
+                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 3), 0); 
+                	consumer.seek(new TopicPartition("instrument_info.100ms.BTCUSDT", 4), 0);
                     flag = false;
                 }
                 for (ConsumerRecord<String, String> record : records) {
