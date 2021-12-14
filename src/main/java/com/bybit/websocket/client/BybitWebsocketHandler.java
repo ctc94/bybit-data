@@ -1,5 +1,7 @@
 package com.bybit.websocket.client;
 
+import java.time.Instant;
+
 import javax.websocket.ClientEndpoint;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -46,7 +48,7 @@ public class BybitWebsocketHandler {
     	if(message.indexOf("instrument_info.100ms.BTCUSDT")!=-1){
     		log.info("instrument_info.100ms.BTCUSDT");
     		this.template.convertAndSend("instrument_info.100ms.BTCUSDT",message);
-    		this.templateKafka.send("instrument_info.100ms.BTCUSDT",message);
+    		this.templateKafka.send("instrument_info.100ms.BTCUSDT",Instant.now().toEpochMilli()+"",message);
     	}
     	
 		/*
