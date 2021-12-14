@@ -22,7 +22,7 @@ public class KafkaConfig {
 //       })
 		@KafkaListener(id = "listen1",topics="instrument_info.100ms.BTCUSDT")
 		public void listen1(@Payload String in,
-		        @Header(name = KafkaHeaders.RECEIVED_MESSAGE_KEY, required = false) Integer key, 
+		        @Header(name = KafkaHeaders.RECEIVED_MESSAGE_KEY, required = false) String key, 
 		        @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition,
 		        @Header(KafkaHeaders.RECEIVED_TOPIC) String topic, 
 		        @Header(KafkaHeaders.RECEIVED_TIMESTAMP) long ts,
