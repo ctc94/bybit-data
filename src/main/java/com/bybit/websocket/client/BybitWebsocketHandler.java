@@ -49,7 +49,7 @@ public class BybitWebsocketHandler {
     		log.info("instrument_info.100ms.BTCUSDT");
     		this.template.convertAndSend("instrument_info.100ms.BTCUSDT",message);
     		this.templateKafka.send("instrument_info.100ms.BTCUSDT",Instant.now().toEpochMilli()+"",message);
-    	}
+    	} 
     	
 		/*
 		 * if(message.indexOf("candle.5.BTCUSDT")!=-1){ log.info("candle.5.BTCUSDT");
