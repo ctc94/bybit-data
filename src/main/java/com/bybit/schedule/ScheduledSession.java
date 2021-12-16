@@ -36,7 +36,7 @@ public class ScheduledSession {
 	
 	@Scheduled(fixedRate = Long.MAX_VALUE)
 	public void sendSms() {
-		SmsUtil.sendMySms("안녕하세요");
+	//	SmsUtil.sendMySms("안녕하세요");
 	}
 	
 	//@Scheduled(fixedRate = 2000, initialDelayString = "5000")
