@@ -2,11 +2,14 @@ package com.bybit.schedule;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
 import javax.websocket.WebSocketContainer;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +18,13 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.bybit.util.FileUtil;
+import com.bybit.util.SmsUtil;
 import com.bybit.websocket.client.BybitWebsocketHandler;
 import com.bybit.websocket.client.Client;
+
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 @Service
 public class ScheduledSession {
 	
@@ -26,7 +34,12 @@ public class ScheduledSession {
 	@Autowired
 	KafkaTemplate<String, String> templateKafka;
 	
-	@Scheduled(fixedRate = 2000, initialDelayString = "5000")
+	@Scheduled(fixedRate = Long.MAX_VALUE)
+	public void sendSms() {
+		SmsUtil.sendMySms("안녕하세요");
+	}
+	
+	//@Scheduled(fixedRate = 2000, initialDelayString = "5000")
 	public void checkSession() throws DeploymentException, IOException {
 		
 		log.info(">>>>>>>> checkSession");
