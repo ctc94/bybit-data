@@ -18,6 +18,5 @@ buildNumber.properties
 .classpath
 .vault_pass
 .api
-.api-sms
 .git-token
 nohup.out
