@@ -1,7 +1,5 @@
 package com.bybit.websocket.client;
 
-import java.time.Instant;
-
 import javax.websocket.ClientEndpoint;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -43,13 +41,14 @@ public class BybitWebsocketHandler {
 
     @OnMessage
     public void processMessage(String message) {
+    	log.info(message);
     	//if(!(message.indexOf("last_price")!=-1 ||  message.indexOf("klineV2")!=-1)) return;   
     	//log.info(message);
-    	if(message.indexOf("instrument_info.100ms.BTCUSDT")!=-1){
-    		log.info("instrument_info.100ms.BTCUSDT");
-    		this.template.convertAndSend("instrument_info.100ms.BTCUSDT",message);
-    		this.templateKafka.send("instrument_info.100ms.BTCUSDT",Instant.now().toEpochMilli()+"",message);
-    	} 
+//    	if(message.indexOf("instrument_info.100ms.BTCUSDT")!=-1){
+//    		log.info("instrument_info.100ms.BTCUSDT");
+//    		//this.template.convertAndSend("instrument_info.100ms.BTCUSDT",message);
+//    		//this.templateKafka.send("instrument_info.100ms.BTCUSDT",Instant.now().toEpochMilli()+"",message);
+//    	} 
     	
 		/*
 		 * if(message.indexOf("candle.5.BTCUSDT")!=-1){ log.info("candle.5.BTCUSDT");

@@ -3,6 +3,8 @@ package com.bybit;
 import java.util.Arrays;
 import java.util.Properties;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -19,9 +21,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -34,14 +36,27 @@ public class BybitDataApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(BybitDataApplication.class);
 
-	@Autowired
-	RedisTemplate<String, Object> template;
+//	@Autowired
+//	RedisTemplate<String, Object> template;
 
 	private final TaskExecutor exec = new SimpleAsyncTaskExecutor();
 
 	public static void main(String[] args) {
 
 		SpringApplication.run(BybitDataApplication.class, args);
+	}
+	
+	@Autowired
+	Environment env;
+	
+	@PostConstruct
+	private void postConstruct() {
+		System.out.println("##########################");
+		System.out.println("@PostConstruct");
+		System.out.println("##########################");
+		System.out.println("# spring.redis.host : " + env.getProperty("spring.redis.host"));//valut에서 가져옴
+		System.out.println("# spring.redis.port : " + env.getProperty("spring.redis.port"));//valut에서 가져옴
+		
 	}
 
 	/*
